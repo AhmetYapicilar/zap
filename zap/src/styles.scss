@@ -119,3 +119,14 @@ body {
     font-weight: 900;
     src: url('./assets/fonts/rubik/rubik-v28-latin-900italic.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
   }
+
+
+  // new fonts
+
+  @font-face {
+    font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+    font-family: 'Sedgwick Ave Display';
+    font-style: normal;
+    font-weight: 400;
+    src: url('./assets/fonts/sedgwick-ave-display-v21-latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+  }
