@@ -13,15 +13,14 @@ import { Game } from '../models/game';
 })
 export class GamePageComponent {
   game: Game;
-  playerHands: { [key: string]: string[] }; // Objekt, um die Hände der Spieler zu speichern
 
   constructor() {
     this.game = new Game();
-    this.playerHands = {}; // Initialisiert ein leeres Objekt für die Spielerhände
+    this.game.playerHands = {}; // Initialisiert ein leeres Objekt für die Spielerhände
 
     // Spielerhände initialisieren
     this.game.players.forEach((player) => {
-      this.playerHands[player] = []; // Jede Spielerhand als leeres Array initialisieren
+      this.game.playerHands[player] = []; // Jede Spielerhand als leeres Array initialisieren
     });
   }
 
@@ -32,22 +31,22 @@ export class GamePageComponent {
       for (let j = 0; j < numberOfCards; j++) {
         const card = this.game.stack.pop();
         if (card) {
-          this.playerHands[player].push(card); // Karten an den entsprechenden Spieler austeilen
+          this.game.playerHands[player].push(card); // Karten an den entsprechenden Spieler austeilen
         } else {
           console.error('Keine Karten mehr im Stapel!');
         }
       }
     });
-    console.log('Karten ausgeteilt:', this.playerHands);
+    console.log('Karten ausgeteilt:', this.game.playerHands);
   }
 
   // Methode, um einem Spieler nur seine eigenen Karten zu zeigen
   showPlayerCards(player: string): string[] | undefined {
-    return this.playerHands[player]; // Gibt nur die Karten des angeforderten Spielers zurück
+    return this.game.playerHands[player]; // Gibt nur die Karten des angeforderten Spielers zurück
   }
   playCard(playerIndex: number, cardIndex: number) {
-    if (this.playerHands[playerIndex] && this.playerHands[playerIndex][cardIndex]) {
-      const playedCard = this.playerHands[playerIndex].splice(cardIndex, 1)[0]; // Karte aus der Hand entfernen
+    if (this.game.playerHands[playerIndex] && this.game.playerHands[playerIndex][cardIndex]) {
+      const playedCard = this.game.playerHands[playerIndex].splice(cardIndex, 1)[0]; // Karte aus der Hand entfernen
       console.log(`${this.game.players[playerIndex]} spielt die Karte: ${playedCard}`);
       // Hier kannst du weitere Logik hinzufügen, z.B. die Karte in einen Ablagestapel verschieben
     } else {
