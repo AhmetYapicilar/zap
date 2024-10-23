@@ -1,0 +1,28 @@
+.player {
+    display: flex;
+    align-items: center;
+    background-color: red;
+    width: 250px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    color: white;
+    padding: 20px 0;
+    span {
+        font-size: 30px;
+        margin-left: 20px;
+    }
+    >img {
+        height: 60px;
+        width: 60px;
+        object-fit: cover;
+        border-radius: 100%;
+    }
+}
+.card-number {
+    border: solid 1px white;
+    padding: 5px;
+}
+.player-avtive {
+    background-color: orange !important;
+    color: black;
+}

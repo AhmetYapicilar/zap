@@ -1,5 +1,14 @@
+<app-players class="player-position"></app-players>
+
+<!-- <div class="hand-outs-card">
+  
+</div> -->
 <div class="game-container">
     <div class="card-stack">
-        
+        @for(item of [1,2,3,4,5]; track $index){
+            <img class="cover-card" src="./assets/img/cards/cover.png" [ngStyle]="{'right.px' : $index *10}" alt="">
+        }
+        <button (click)="handOut()">Hand out cards</button>
     </div>
+
 </div>

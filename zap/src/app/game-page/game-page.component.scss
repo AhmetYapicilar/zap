@@ -1,0 +1,29 @@
+.game-container {
+    background-color: #000000b5;
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+}
+
+.card-stack {
+    position: relative;
+    >button {
+        margin-top: 234px;
+    }
+
+}
+.cover-card {
+    width: 150px;
+    border-radius: 12px;
+    position: absolute;
+}
+
+.player-position {
+    position: absolute;
+    right: 0;
+    top: 20px;
+    z-index: 1;
+}
