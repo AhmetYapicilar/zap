@@ -6,14 +6,14 @@ import { PlayersComponent } from '../players/players.component';
 @Component({
   selector: 'app-game-page',
   standalone: true,
-  imports: [CommonModule,PlayersComponent],
+  imports: [CommonModule,PlayersComponent,],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.scss'
 })
 export class GamePageComponent {
 
+
   handOut() {
-    console.log('test');
-    
   }
+  
 }
