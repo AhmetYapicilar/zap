@@ -1,14 +1,25 @@
 <app-players class="player-position"></app-players>
 
-<!-- <div class="hand-outs-card">
-  
-</div> -->
 <div class="game-container">
     <div class="card-stack">
-        @for(item of [1,2,3,4,5]; track $index){
-            <img class="cover-card" src="./assets/img/cards/cover.png" [ngStyle]="{'right.px' : $index *10}" alt="">
-        }
+        <!-- Stapel mit Karten wird gerendert -->
+        <ng-container *ngFor="let card of game.stack; let i = index">
+            <img *ngIf="i < 5" class="cover-card" src="./assets/img/cards/cover.png" [ngStyle]="{'right.px': i * 10}" alt="Card Stack">
+        </ng-container>
         <button (click)="handOut()">Hand out cards</button>
     </div>
 
+    <!-- Hier könntest du die Karten der Spieler anzeigen, nachdem sie ausgeteilt wurden -->
+    <div class="players-hands">
+        <ng-container *ngFor="let player of game.players; let i = index">
+            <div class="player">
+                <span>{{ player }}</span>
+                <!-- Hier könntest du die Handkarten des Spielers anzeigen -->
+                <ng-container *ngFor="let card of playerHands[i]">
+                    <img class="player-card" [src]="'./assets/img/cards/' + card + '.png'" alt="{{ card }}">
+                </ng-container>
+                <span class="card-number">{{ playerHands[i]?.length || 0 }}</span>
+            </div>
+        </ng-container>
+    </div>
 </div>
