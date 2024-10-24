@@ -20,8 +20,20 @@
                 <ng-container *ngFor="let card of this.game.playerHands[i]">
                     <img class="player-card" [src]="'./assets/img/cards/' + card + '.png'" alt="{{ card }}">
                 </ng-container>
-                <span class="card-number">{{ this.game.playerHands[i]?.length || 0 }}</span>
+            
             </div>
+            <span class="card-number">{{ this.game.playerHands[player]?.length || 0 }}</span>
         </ng-container>
+        <!-- <ng-container *ngFor="let player of game.players; let i = index">
+            <div class="player">
+                <span>{{ player }}</span>
+                <ng-container *ngFor="let card of game.playerHands[player]">
+                    <img class="player-card" [src]="'./assets/img/cards/' + card + '.png'" alt="{{ card }}">
+                </ng-container>
+              
+            </div>
+            <span class="card-number">{{ game.playerHands[player]?.length || 0 }}</span>
+        </ng-container> -->
+        
     </div>
 </div>

@@ -18,11 +18,11 @@ export class GamePageComponent {
   game: Game;
   @Input() name:string = ''; 
    spezifikPlayer ='';
-  
+   players: string[] = [];
   constructor( private gamerService: GameService) {
     this.game = new Game();
     this.game.playerHands = {}; // Initialisiert ein leeres Objekt für die Spielerhände
-    
+    this.players = this.gamerService.game.players;
     // Spielerhände initialisieren
     this.game.players.forEach((player) => {
       this.game.playerHands[player] = []; // Jede Spielerhand als leeres Array initialisieren

@@ -1,6 +1,7 @@
 import { Component, OnInit ,Input, input } from '@angular/core';
 import { Game } from '../models/game';
 import { GamePageComponent } from '../game-page/game-page.component';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-players',
@@ -12,12 +13,15 @@ import { GamePageComponent } from '../game-page/game-page.component';
 export class PlayersComponent {
   game: Game;
   @Input() name:string = '';
-  constructor() {
+  @Input() player: string = '';
+  constructor(private gamerService : GameService) {
     this.game = new Game();
     this.game.playerHands = {};
   }
 
-  
+  getPlayerCardCount(): number {
+    return this.gamerService.getPlayerCardCount(this.player);
+  }
 
 
 }
