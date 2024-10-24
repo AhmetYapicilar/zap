@@ -10,5 +10,12 @@ import { GamePageComponent } from '../game-page/game-page.component';
   styleUrl: './players.component.scss'
 })
 export class PlayersComponent {
+  game: Game;
+
+  constructor() {
+    this.game = new Game();
+    this.game.playerHands = {};
+  }
+
 
 }

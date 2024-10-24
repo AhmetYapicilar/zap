@@ -17,7 +17,7 @@ export class GamePageComponent {
   constructor() {
     this.game = new Game();
     this.game.playerHands = {}; // Initialisiert ein leeres Objekt für die Spielerhände
-
+    
     // Spielerhände initialisieren
     this.game.players.forEach((player) => {
       this.game.playerHands[player] = []; // Jede Spielerhand als leeres Array initialisieren
@@ -38,6 +38,18 @@ export class GamePageComponent {
       }
     });
     console.log('Karten ausgeteilt:', this.game.playerHands);
+    const spezificPlayer = this.game.players[1];
+    // console.log(this.game.playerHands[spezificPlayer].length);
+    this.showHowManyCards();
+  }
+
+  showHowManyCards() {
+    for (let i = 0; i < this.game.players.length; i++) {
+      // Wieviel jeder Karten hat
+      let spezifikPlayer = this.game.players[i];8
+      let name = this.game.playerHands[spezifikPlayer].length;
+      console.log(name);
+    }
   }
 
   // Methode, um einem Spieler nur seine eigenen Karten zu zeigen

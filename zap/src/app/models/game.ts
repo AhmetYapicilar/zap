@@ -5,7 +5,7 @@ export class Game {
   public stack: string[] = [];
   public playedCards: string[] = [];
   public currentPlayer: number = 0;
-  public playerHands: { [key: string]: string[] } = {}; 
+  public playerHands: { [player: string]: string[] } = {}; 
 
   constructor() {
     const colors = ['blue', 'green', 'orange', 'yellow'];
