@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Game } from '../models/game';
+import { GamePageComponent } from '../game-page/game-page.component';
 
 @Component({
   selector: 'app-players',
   standalone: true,
-  imports: [],
+  imports: [GamePageComponent],
   templateUrl: './players.component.html',
   styleUrl: './players.component.scss'
 })
