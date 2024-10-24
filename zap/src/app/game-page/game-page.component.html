@@ -15,10 +15,10 @@
             <div class="player">
                 <span>{{ player }}</span>
                 <!-- Hier könntest du die Handkarten des Spielers anzeigen -->
-                <ng-container *ngFor="let card of playerHands[i]">
+                <ng-container *ngFor="let card of this.game.playerHands[i]">
                     <img class="player-card" [src]="'./assets/img/cards/' + card + '.png'" alt="{{ card }}">
                 </ng-container>
-                <span class="card-number">{{ playerHands[i]?.length || 0 }}</span>
+                <span class="card-number">{{ this.game.playerHands[i]?.length || 0 }}</span>
             </div>
         </ng-container>
     </div>
