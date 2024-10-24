@@ -20,7 +20,6 @@
                 <ng-container *ngFor="let card of this.game.playerHands[i]">
                     <img class="player-card" [src]="'./assets/img/cards/' + card + '.png'" alt="{{ card }}">
                 </ng-container>
-            
             </div>
             <span class="card-number">{{ this.game.playerHands[player]?.length || 0 }}</span>
         </ng-container>

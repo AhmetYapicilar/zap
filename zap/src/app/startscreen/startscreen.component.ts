@@ -13,15 +13,21 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './startscreen.component.scss'
 })
 export class StartscreenComponent {
-  name:string = ''
-  constructor(private router: Router) {
+  name: string = '';
 
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    // Optional: Falls die Animation nach dem Laden der Seite gestartet werden soll.
+    const spanElement = document.querySelector('.button-start-page > span');
+    if (spanElement) {
+      setTimeout(() => {
+        spanElement.classList.add('animate');
+      }, 500); // Verzögert die Animation um 500 ms
+    }
   }
 
-  starNewGame() {
-    let game = new Game();
+  startNewGame() {
     this.router.navigateByUrl('/game/');
-    console.log(game);
-    
   }
 }
