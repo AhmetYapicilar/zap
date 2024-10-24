@@ -3,6 +3,7 @@ import { Component, OnInit ,Input } from '@angular/core';
 import { PlayersComponent } from '../players/players.component';
 import { Game } from '../models/game';
 import { StartscreenComponent } from '../startscreen/startscreen.component';
+import { GameService } from '../game.service';
 
 
 
@@ -15,8 +16,10 @@ import { StartscreenComponent } from '../startscreen/startscreen.component';
 })
 export class GamePageComponent {
   game: Game;
-  @Input() name:string = '';
-  constructor() {
+  @Input() name:string = ''; 
+   spezifikPlayer ='';
+  
+  constructor( private gamerService: GameService) {
     this.game = new Game();
     this.game.playerHands = {}; // Initialisiert ein leeres Objekt für die Spielerhände
     
@@ -49,8 +52,8 @@ export class GamePageComponent {
   showHowManyCards() {
     for (let i = 0; i < this.game.players.length; i++) {
       // Wieviel jeder Karten hat
-      let spezifikPlayer = this.game.players[i];8
-      let name = this.game.playerHands[spezifikPlayer].length;
+       this.spezifikPlayer = this.game.players[i];
+      let name = this.game.playerHands[this.spezifikPlayer].length;
       console.log(name);
     }
   }
