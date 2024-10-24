@@ -16,6 +16,7 @@ import { GameService } from '../game.service';
 })
 export class GamePageComponent {
   game: Game;
+  @Input() cardAmount: number = 0;
   @Input() name:string = ''; 
    spezifikPlayer ='';
    players: string[] = [];
