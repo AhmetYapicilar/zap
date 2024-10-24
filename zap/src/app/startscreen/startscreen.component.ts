@@ -1,5 +1,4 @@
-import { Component, NgModule } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, AfterViewInit } from '@angular/core';import { Router } from '@angular/router';
 import { Game } from '../models/game'
 import { GamePageComponent } from '../game-page/game-page.component';
 import { CommonModule } from '@angular/common';
@@ -12,18 +11,22 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './startscreen.component.html',
   styleUrl: './startscreen.component.scss'
 })
-export class StartscreenComponent {
+export class StartscreenComponent implements AfterViewInit {
   name: string = '';
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
-    // Optional: Falls die Animation nach dem Laden der Seite gestartet werden soll.
+  ngAfterViewInit() {
+    // Starte die Animation erst, wenn die Ansicht vollständig geladen ist
     const spanElement = document.querySelector('.button-start-page > span');
-    if (spanElement) {
+    const startBoxElement = document.querySelector('.start-box');
+
+    if (spanElement && startBoxElement) {
       setTimeout(() => {
-        spanElement.classList.add('animate');
-      }, 500); // Verzögert die Animation um 500 ms
+        // Animationen starten
+        spanElement.classList.add('animate-fade-in');
+        startBoxElement.classList.add('animate-slide-in');
+      }, 100); // Optional: kurze Verzögerung, damit alles flüssig wirkt
     }
   }
 
