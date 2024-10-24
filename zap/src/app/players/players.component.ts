@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit ,Input, input } from '@angular/core';
 import { Game } from '../models/game';
 import { GamePageComponent } from '../game-page/game-page.component';
 
@@ -11,7 +11,7 @@ import { GamePageComponent } from '../game-page/game-page.component';
 })
 export class PlayersComponent {
   game: Game;
-
+  @Input() name:string = '';
   constructor() {
     this.game = new Game();
     this.game.playerHands = {};

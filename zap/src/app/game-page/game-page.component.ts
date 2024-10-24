@@ -1,19 +1,21 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit ,Input } from '@angular/core';
 import { PlayersComponent } from '../players/players.component';
 import { Game } from '../models/game';
+import { StartscreenComponent } from '../startscreen/startscreen.component';
+
 
 
 @Component({
   selector: 'app-game-page',
   standalone: true,
-  imports: [CommonModule,PlayersComponent,],
+  imports: [CommonModule,PlayersComponent,StartscreenComponent],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.scss'
 })
 export class GamePageComponent {
   game: Game;
-
+  @Input() name:string = '';
   constructor() {
     this.game = new Game();
     this.game.playerHands = {}; // Initialisiert ein leeres Objekt für die Spielerhände
@@ -41,6 +43,7 @@ export class GamePageComponent {
     const spezificPlayer = this.game.players[1];
     // console.log(this.game.playerHands[spezificPlayer].length);
     this.showHowManyCards();
+    this.disableHandOutButton();
   }
 
   showHowManyCards() {
@@ -66,5 +69,15 @@ export class GamePageComponent {
     }
   }
 
-}
 
+  disableHandOutButton() {
+    let handOut = document.getElementById('handOut') as HTMLButtonElement; // Typcasting auf HTMLButtonElement
+    if (handOut) {
+      handOut.disabled = true;  // Deaktiviert den Button
+    } else {
+      console.error('Button mit ID "handOut" nicht gefunden');
+    }
+  }
+  
+  }
+  
