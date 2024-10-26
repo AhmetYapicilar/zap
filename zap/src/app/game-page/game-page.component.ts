@@ -94,18 +94,5 @@ export class GamePageComponent {
       console.error('Button mit ID "handOut" nicht gefunden');
     }
   }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent);
-    dialogRef.afterClosed().subscribe((name: string) => {
-      if(name && name.length > 1){
-      this.game.players.push(name);
-      }
-    });
-  
-  }
-  
-
-
   }
   
