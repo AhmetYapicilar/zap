@@ -34,9 +34,6 @@ export class StartscreenComponent implements AfterViewInit {
 
   startNewGame() {
     this.router.navigateByUrl('/game/');
-<<<<<<< HEAD
-    
-=======
     this.openDialog();
   }
 
@@ -48,6 +45,5 @@ export class StartscreenComponent implements AfterViewInit {
         console.log('Player Name:', result); // Verwende den Namen hier weiter
       }
     });
->>>>>>> 0d1aa547a8b019e6945c4560b63e7e0efb0b699f
   }
 }
