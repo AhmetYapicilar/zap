@@ -31,6 +31,17 @@
             </div>
             <span class="card-number">{{ game.playerHands[player]?.length || 0 }}</span>
         </ng-container> -->
+        <div class="players-hands">
+            <ng-container *ngFor="let player of game.players; let i = index">
+                <div *ngIf="player === 'Justin'" class="player"> <!-- Nur für Justin anzeigen -->
+                    <span>{{ player }}</span>
+                    <ng-container *ngFor="let card of game.playerHands[player]">
+                        <img class="player-card" [src]="'./assets/img/cards/' + card + '.png'" alt="{{ card }}">
+                    </ng-container>
+                    <span class="card-number">{{ game.playerHands[player]?.length || 0 }}</span>
+                </div>
+            </ng-container>
+        </div>
         
     </div>
 </div>
