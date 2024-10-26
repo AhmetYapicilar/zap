@@ -7,6 +7,5 @@
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
-  <!-- <button mat-button [mat-dialog-close]="" [disabled]="">Ok</button> -->
+  <button mat-button [mat-dialog-close]="name" [disabled]="name.length == 0">Ok</button>
 </mat-dialog-actions>
