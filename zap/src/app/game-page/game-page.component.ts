@@ -4,9 +4,11 @@ import { PlayersComponent } from '../players/players.component';
 import { Game } from '../models/game';
 import { StartscreenComponent } from '../startscreen/startscreen.component';
 import { GameService } from '../game.service';
+import { MatDialog } from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
+import { DialogComponent } from '../dialog/dialog.component';
 
 
 
@@ -31,7 +33,7 @@ export class GamePageComponent {
    spezifikPlayer ='';
    players: string[] = [];
 
-  constructor( private gamerService: GameService) {
+  constructor( private gamerService: GameService, public dialog: MatDialog) {
     this.game = new Game();
     this.game.playerHands = {}; // Initialisiert ein leeres Objekt für die Spielerhände
     this.players = this.gamerService.game.players;
@@ -92,6 +94,16 @@ export class GamePageComponent {
     } else {
       console.error('Button mit ID "handOut" nicht gefunden');
     }
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe((name: string) => {
+      if(name && name.length > 1){
+      this.game.players.push(name);
+      }
+    });
+  
   }
   
 
