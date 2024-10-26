@@ -52,7 +52,7 @@ export class GamePageComponent {
 
   showHowManyCards() {
     for (let i = 0; i < this.game.players.length; i++) {
-      // Wieviel jeder Karten hat
+      // Wieviel Karten jeder hat
        this.spezifikPlayer = this.game.players[i];
       let name = this.game.playerHands[this.spezifikPlayer].length;
       console.log(name);

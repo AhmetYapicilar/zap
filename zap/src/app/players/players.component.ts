@@ -14,6 +14,7 @@ export class PlayersComponent {
   game: Game;
   @Input() name:string = '';
   @Input() player: string = '';
+  @Input() cardCount: number = 0;  // Anzahl der Karten
   constructor(private gamerService : GameService) {
     this.game = new Game();
     this.game.playerHands = {};
