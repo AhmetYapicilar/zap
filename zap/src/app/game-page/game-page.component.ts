@@ -18,7 +18,6 @@ import { DialogComponent } from '../dialog/dialog.component';
   imports: [
   CommonModule,
   PlayersComponent,
-  StartscreenComponent,
   MatButtonModule, 
   MatDividerModule,
    MatIconModule
