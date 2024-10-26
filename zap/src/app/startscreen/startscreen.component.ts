@@ -32,5 +32,6 @@ export class StartscreenComponent implements AfterViewInit {
 
   startNewGame() {
     this.router.navigateByUrl('/game/');
+    
   }
 }
