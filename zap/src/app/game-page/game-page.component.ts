@@ -4,13 +4,23 @@ import { PlayersComponent } from '../players/players.component';
 import { Game } from '../models/game';
 import { StartscreenComponent } from '../startscreen/startscreen.component';
 import { GameService } from '../game.service';
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
 
 
 
 @Component({
   selector: 'app-game-page',
   standalone: true,
-  imports: [CommonModule,PlayersComponent,StartscreenComponent],
+  imports: [
+  CommonModule,
+  PlayersComponent,
+  StartscreenComponent,
+  MatButtonModule, 
+  MatDividerModule,
+   MatIconModule
+],
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.scss'
 })
@@ -20,6 +30,7 @@ export class GamePageComponent {
   @Input() name:string = ''; 
    spezifikPlayer ='';
    players: string[] = [];
+
   constructor( private gamerService: GameService) {
     this.game = new Game();
     this.game.playerHands = {}; // Initialisiert ein leeres Objekt für die Spielerhände
@@ -83,5 +94,7 @@ export class GamePageComponent {
     }
   }
   
+
+
   }
   
