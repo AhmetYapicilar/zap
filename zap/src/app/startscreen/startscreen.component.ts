@@ -7,6 +7,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Firestore, collection, collectionData,addDoc,docData,doc, } from '@angular/fire/firestore';
 import { DialogJoinGameComponent } from '../dialog-joingame/dialog-joingame.component';
+import { GameService } from '../game.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class StartscreenComponent implements AfterViewInit {
   firestore: Firestore = inject(Firestore);
   name: string = '';
 
-  constructor(private router: Router, public dialog: MatDialog) {}
+  constructor(private router: Router, public dialog: MatDialog, private gamerService: GameService) {}
 
   ngAfterViewInit() {
     // Starte die Animation erst, wenn die Ansicht vollständig geladen ist
@@ -41,7 +42,7 @@ export class StartscreenComponent implements AfterViewInit {
     // let gameCollection = collection(this.firestore, 'games');
     // addDoc(this.getGameRef(), game.toJson())
     this.router.navigateByUrl('/game/');
-    this.openDialog();
+    this.gamerService.openDialog();
   }
 
   joinGame() {
@@ -57,16 +58,6 @@ export class StartscreenComponent implements AfterViewInit {
 
   getGameRef() {
     return collection(this.firestore, 'games');
-  }
-
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Player Name:', result); // Verwende den Namen hier weiter
-      }
-    });
   }
 
   openDialogToJoinGame(): void{

@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { StartscreenComponent } from '../startscreen/startscreen.component';
 import { DialogComponent } from '../dialog/dialog.component';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-dialog',
@@ -34,7 +35,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 export class DialogJoinGameComponent {
   gameID: string = 'e0CZxX0V0kccdnhdQwle';
   startScreen = StartscreenComponent;
-  constructor(private router: Router, public dialogRef: MatDialogRef<DialogJoinGameComponent>) {
+  constructor(private router: Router, public dialogRef: MatDialogRef<DialogJoinGameComponent>, private gamerService: GameService) {
     
   }
 
@@ -44,7 +45,7 @@ export class DialogJoinGameComponent {
 
   navigateToURL(gameID: string){
     this.router.navigateByUrl('/game/' + gameID);  
-
+    this.gamerService.openDialog();
   }
 
   
