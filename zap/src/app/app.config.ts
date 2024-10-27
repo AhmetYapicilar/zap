@@ -13,5 +13,5 @@ export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes), provideFirebaseApp(() => initializeApp({ "projectId": "zapgame", "appId": "1:890434539045:web:4e2775d115a923685739cc", "storageBucket": "zapgame.appspot.com", "apiKey": "AIzaSyDRKgmCgJsFBgaJbHQuEqHYsl_acCIKepo", "authDomain": "zapgame.firebaseapp.com", "messagingSenderId": "890434539045" })), provideAuth(() => getAuth()), provideFirestore(() => getFirestore()), provideDatabase(() => getDatabase()), provideServiceWorker('ngsw-worker.js', {
         enabled: !isDevMode(),
         registrationStrategy: 'registerWhenStable:30000'
-    }), provideAnimationsAsync()]
+    }), provideAnimationsAsync(), provideAnimationsAsync()]
 };
