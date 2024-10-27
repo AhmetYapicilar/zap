@@ -7,6 +7,7 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Firestore, collection, collectionData,addDoc,docData,doc, } from '@angular/fire/firestore';
 
+
 @Component({
   selector: 'app-startscreen',
   standalone: true,
