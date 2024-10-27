@@ -1,10 +1,11 @@
-import { Component, AfterViewInit } from '@angular/core';import { Router } from '@angular/router';
+import { Component, AfterViewInit, inject } from '@angular/core';import { Router } from '@angular/router';
 import { Game } from '../models/game'
 import { GamePageComponent } from '../game-page/game-page.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { Firestore, collection, collectionData,addDoc,docData,doc, } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-startscreen',
@@ -14,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrl: './startscreen.component.scss'
 })
 export class StartscreenComponent implements AfterViewInit {
+  firestore: Firestore = inject(Firestore);
   name: string = '';
 
   constructor(private router: Router, public dialog: MatDialog) {}
@@ -33,9 +35,18 @@ export class StartscreenComponent implements AfterViewInit {
   }
 
   startNewGame() {
+    let game = new Game();
+    let gameCollection = collection(this.firestore, 'games');
+  console.log(gameCollection);
+  
     this.router.navigateByUrl('/game/');
     this.openDialog();
   }
+
+  getGameRef() {
+    return collection(this.firestore, 'games');
+  }
+
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent);
