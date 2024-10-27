@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit ,Input } from '@angular/core';
+import { Component, inject,Input} from '@angular/core';
 import { PlayersComponent } from '../players/players.component';
 import { Game } from '../models/game';
 import { StartscreenComponent } from '../startscreen/startscreen.component';
@@ -8,7 +8,8 @@ import { MatDialog } from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatButtonModule} from '@angular/material/button';
-import { DialogComponent } from '../dialog/dialog.component';
+import { ActivatedRoute } from '@angular/router';
+import { Firestore, collection, collectionData,addDoc,docData,doc, updateDoc, } from '@angular/fire/firestore';
 
 
 
@@ -31,8 +32,11 @@ export class GamePageComponent {
   @Input() name:string = ''; 
    spezifikPlayer ='';
    players: string[] = [];
+   paramsId:string ='';
+   firestore: Firestore = inject(Firestore);
 
-  constructor( private gamerService: GameService, public dialog: MatDialog) {
+
+  constructor( private gamerService: GameService,private route: ActivatedRoute,) {
     this.game = new Game();
     this.game.playerHands = {}; // Initialisiert ein leeres Objekt für die Spielerhände
     this.players = this.gamerService.game.players;
@@ -75,6 +79,7 @@ export class GamePageComponent {
   showPlayerCards(player: string): string[] | undefined {
     return this.game.playerHands[player]; // Gibt nur die Karten des angeforderten Spielers zurück
   }
+  
   playCard(playerIndex: number, cardIndex: number) {
     if (this.game.playerHands[playerIndex] && this.game.playerHands[playerIndex][cardIndex]) {
       const playedCard = this.game.playerHands[playerIndex].splice(cardIndex, 1)[0]; // Karte aus der Hand entfernen
@@ -94,5 +99,11 @@ export class GamePageComponent {
       console.error('Button mit ID "handOut" nicht gefunden');
     }
   }
+
+  getSingleGameRef(docId: string){
+    return doc(collection(this.firestore, 'games'), docId);
+    
+  }
+
   }
   

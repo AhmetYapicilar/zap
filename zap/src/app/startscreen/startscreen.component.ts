@@ -36,11 +36,21 @@ export class StartscreenComponent implements AfterViewInit {
 
   startNewGame() {
     let game = new Game();
-    let gameCollection = collection(this.firestore, 'games');
-  console.log(gameCollection);
-  
+    // let gameCollection = collection(this.firestore, 'games');
+    // addDoc(this.getGameRef(), game.toJson())
     this.router.navigateByUrl('/game/');
     this.openDialog();
+  }
+
+  joinGame() {
+    let game = new Game();
+    let gameCollecton = collection(this.firestore, 'games');
+    addDoc(this.getGameRef(), game.toJson()).then((gameInfo)=> {
+      console.log(gameInfo);
+      this.router.navigateByUrl('/game/' + gameInfo.id);
+      
+    })
+    this.openDialog()
   }
 
   getGameRef() {
@@ -50,7 +60,6 @@ export class StartscreenComponent implements AfterViewInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent);
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Player Name:', result); // Verwende den Namen hier weiter

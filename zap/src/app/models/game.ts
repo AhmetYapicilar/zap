@@ -1,7 +1,7 @@
 import { ArrayType } from '@angular/compiler';
 
 export class Game {
-  public players: string[] = ['Justin', 'Sarah', 'Alex','Ahmet'];
+  public players: string[] = [];
   public stack: string[] = [];
   public playedCards: string[] = [];
   public currentPlayer: number = 0;
@@ -27,7 +27,22 @@ export class Game {
     }
     shuffle(this.stack);
   }
+
+
+  public toJson() {
+    return {
+         players: this.players, 
+         stack : this.stack, 
+         playedCards: this.playedCards, 
+         currentPlayer: this.currentPlayer,
+        //  pickCardAnimation : this.pickCardAnimation,
+        playerHands : this.playerHands,
+    }
+  }
 }
+
+
+
 
   function shuffle(array: any) {
     let currentIndex = array.length;
