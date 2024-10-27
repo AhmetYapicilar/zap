@@ -12,6 +12,7 @@ import {
   docData,
   doc,
   updateDoc,
+  arrayUnion,
 } from '@angular/fire/firestore';
 
 @Injectable({
@@ -49,10 +50,12 @@ export class GameService {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent);
-    dialogRef.afterClosed().subscribe((inputName: string) => {
-      if (inputName && inputName.length > 0) {
-        console.log(inputName);
-        this.game.players.push(inputName);
+    dialogRef.afterClosed().subscribe((arrayUnion: string) => {
+      if (arrayUnion && arrayUnion.length > 0) {
+        console.log(arrayUnion);
+        this.game.players.push(arrayUnion);
+        console.log(this.game.players);
+        
         this.saveGame();
       }
     });
@@ -61,8 +64,11 @@ export class GameService {
   getSingleGameRef(docId: string) {
     return doc(collection(this.firestore, 'games'), docId);
   }
-
   saveGame() {
-    updateDoc(this.getSingleGameRef(this.paramsId), this.game.toJson());
+    // Nur den neuen Spieler zum bestehenden Array in Firestore hinzufügen
+    const gameRef = this.getSingleGameRef(this.paramsId);
+    updateDoc(gameRef, {
+      players: arrayUnion(this.game.players[this.game.players.length - 1])
+    });
   }
 }
