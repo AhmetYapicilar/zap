@@ -34,7 +34,8 @@ export class GamePageComponent {
    players: string[] = [];
    paramsId:string ='';
    firestore: Firestore = inject(Firestore);
-
+   games$;
+   games;
 
   constructor( private gamerService: GameService,private route: ActivatedRoute,) {
     this.game = new Game();
@@ -44,7 +45,25 @@ export class GamePageComponent {
     this.game.players.forEach((player) => {
       this.game.playerHands[player] = []; // Jede Spielerhand als leeres Array initialisieren
     });
+
+
+
+    this.route.params.subscribe((params: any) => {
+      this.paramsId = params.id;
+    });
+
+    this.games$ = docData(this.getSingleGameRef(this.paramsId));
+    this.games = this.games$.subscribe((gameList:any) => {
+      console.log(gameList.players);
+    this.game.currentPlayer = gameList.currentPlayer;
+    this.game.playedCards = gameList.playedCards;
+    this.game.players = gameList.players;
+    this.game.stack = gameList.stack;
+    this.game.playerHands = gameList.playerHands;
+    });
   }
+
+  
 
   handOut() {
     const numberOfCards = 7; // Anzahl der Karten pro Spieler
@@ -98,12 +117,16 @@ export class GamePageComponent {
     } else {
       console.error('Button mit ID "handOut" nicht gefunden');
     }
-  }
 
+  }
+    
   getSingleGameRef(docId: string){
     return doc(collection(this.firestore, 'games'), docId);
     
   }
-
   }
+
+
+
+  
   

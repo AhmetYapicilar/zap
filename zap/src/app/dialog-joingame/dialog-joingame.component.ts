@@ -11,6 +11,8 @@ import {
 } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { StartscreenComponent } from '../startscreen/startscreen.component';
+import { DialogComponent } from '../dialog/dialog.component';
 
 @Component({
   selector: 'app-dialog',
@@ -23,21 +25,27 @@ import { MatInputModule } from '@angular/material/input';
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose
+    MatDialogClose,
+    StartscreenComponent,DialogComponent
   ],
   templateUrl: './dialog-joingame.component.html',
   styleUrls: ['./dialog-joingame.component.scss']
 })
 export class DialogJoinGameComponent {
-  gameID: string = '';
-
-  constructor(private router: Router, public dialogRef: MatDialogRef<DialogJoinGameComponent>) {}
+  gameID: string = 'e0CZxX0V0kccdnhdQwle';
+  startScreen = StartscreenComponent;
+  constructor(private router: Router, public dialogRef: MatDialogRef<DialogJoinGameComponent>) {
+    
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
   navigateToURL(gameID: string){
-    this.router.navigateByUrl('/game/' + gameID);
+    this.router.navigateByUrl('/game/' + gameID);  
+
   }
+
+  
 }
