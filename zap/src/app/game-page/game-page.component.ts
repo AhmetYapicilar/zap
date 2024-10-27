@@ -69,6 +69,7 @@ export class GamePageComponent {
     const numberOfCards = 7; // Anzahl der Karten pro Spieler
 
     this.game.players.forEach((player) => {
+      debugger;
       for (let j = 0; j < numberOfCards; j++) {
         const card = this.game.stack.pop();
         if (card) {

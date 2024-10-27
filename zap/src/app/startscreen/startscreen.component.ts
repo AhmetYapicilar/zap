@@ -39,9 +39,10 @@ export class StartscreenComponent implements AfterViewInit {
 
   startNewGame() {
     let game = new Game();
-    // let gameCollection = collection(this.firestore, 'games');
-    // addDoc(this.getGameRef(), game.toJson())
-    this.router.navigateByUrl('/game/');
+    addDoc(this.getGameRef(), game.toJson())
+    .then((gameInfo: any) => {
+      this.router.navigateByUrl('/game/' + gameInfo.id);
+    });
     this.gamerService.openDialog();
   }
 
