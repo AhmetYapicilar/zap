@@ -6,11 +6,12 @@ import { FormsModule } from '@angular/forms';
 import { DialogComponent } from '../dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Firestore, collection, collectionData,addDoc,docData,doc, } from '@angular/fire/firestore';
+import { DialogJoinGameComponent } from '../dialog-joingame/dialog-joingame.component';
 
 @Component({
   selector: 'app-startscreen',
   standalone: true,
-  imports: [GamePageComponent,CommonModule,FormsModule, DialogComponent],
+  imports: [GamePageComponent,CommonModule,FormsModule, DialogComponent, DialogJoinGameComponent],
   templateUrl: './startscreen.component.html',
   styleUrl: './startscreen.component.scss'
 })
@@ -43,14 +44,14 @@ export class StartscreenComponent implements AfterViewInit {
   }
 
   joinGame() {
-    let game = new Game();
-    let gameCollecton = collection(this.firestore, 'games');
-    addDoc(this.getGameRef(), game.toJson()).then((gameInfo)=> {
-      console.log(gameInfo);
-      this.router.navigateByUrl('/game/' + gameInfo.id);
+    // let game = new Game();
+    // let gameCollecton = collection(this.firestore, 'games');
+    // addDoc(this.getGameRef(), game.toJson()).then((gameInfo)=> {
+    //   console.log(gameInfo);
+    //   this.router.navigateByUrl('/game/' + gameInfo.id);
       
-    })
-    this.openDialog()
+    // })
+    this.openDialogToJoinGame();
   }
 
   getGameRef() {
@@ -63,6 +64,15 @@ export class StartscreenComponent implements AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Player Name:', result); // Verwende den Namen hier weiter
+      }
+    });
+  }
+
+  openDialogToJoinGame(): void{
+    const dialogRef = this.dialog.open(DialogJoinGameComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('GameID:', result); // Verwende den Namen hier weiter
       }
     });
   }

@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Add New Player</h2>
+<mat-dialog-content>
+  <p>Please Enter The ID</p>
+  <mat-form-field>
+    <mat-label>URL</mat-label>
+    <input matInput [(ngModel)]="gameID" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)="navigateToURL(gameID)" mat-button [mat-dialog-close]="gameID">Join</button>
+</mat-dialog-actions>
