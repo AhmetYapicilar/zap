@@ -48,31 +48,77 @@ export class GameService {
     return playerCardCounts;
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent);
-    dialogRef.afterClosed().subscribe((arrayUnion: string) => {
-      if (arrayUnion && arrayUnion.length > 0) {
-        console.log(arrayUnion);
-        this.game.players.push(arrayUnion);
-        console.log(this.game.players);
-        
-        this.savePlayers();
-      }
-    });
-  }
+  // openDialog(): void {
+  //   const dialogRef = this.dialog.open(DialogComponent);
+  //   dialogRef.afterClosed().subscribe((newPlayer: string) => {
+  //     if (newPlayer && newPlayer.length > 0) {
+  //       console.log(newPlayer);
+  //       this.game.players.push(newPlayer);
+  
+  //       // Speichern Sie den neuen Spieler und aktualisieren Sie Firestore
+  //       this.saveGame(newPlayer);
+  //     }
+  //   });
+  // }
 
   getSingleGameRef(docId: string) {
     return doc(collection(this.firestore, 'games'), docId);
   }
-  savePlayers() {
-    // Nur den neuen Spieler zum bestehenden Array in Firestore hinzufügen
+  // savePlayers() {
+  //   // Nur den neuen Spieler zum bestehenden Array in Firestore hinzufügen
+  //   const gameRef = this.getSingleGameRef(this.paramsId);
+  //   updateDoc(gameRef, {
+  //     players: arrayUnion(this.game.players[this.game.players.length - 1])
+  //   });
+  // }
+
+async savePlayerHandsAndStack() {
+  console.log('Versuche, playerHands und stack zu speichern');
+  try {
     const gameRef = this.getSingleGameRef(this.paramsId);
-    updateDoc(gameRef, {
-      players: arrayUnion(this.game.players[this.game.players.length - 1])
+
+    // Konvertieren Sie das Game-Objekt in JSON
+    const gameData = this.game.toJson();
+    
+    console.log('Speichern von playerHands und stack:', JSON.stringify(gameData.playerHands), JSON.stringify(gameData.stack));
+
+    // `playerHands` und `stack` in Firestore aktualisieren
+    await updateDoc(gameRef, {
+      playerHands: gameData.playerHands,  // Vermeidung von Referenzen
+      stack: gameData.stack                 // Kopie des Arrays anlegen
+    });
+    
+    console.log('playerHands und stack wurden erfolgreich in Firestore gespeichert');
+  } catch (error) {
+    console.error('Fehler beim Speichern der playerHands und stack:', error);
+  }
+}
+
+  
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogComponent);
+    dialogRef.afterClosed().subscribe((newPlayer: string) => {
+      if (newPlayer && newPlayer.length > 0) {
+        console.log(newPlayer);
+        this.game.players.push(newPlayer);
+  
+        // Speichern Sie den neuen Spieler, ohne `players` zu überschreiben
+        this.saveNewPlayer(newPlayer);
+      }
     });
   }
-
-  saveGame(){
-    updateDoc(this.getSingleGameRef(this.paramsId), this.game.toJson());
+  
+  async saveNewPlayer(newPlayer: string) {
+    try {
+      const gameRef = this.getSingleGameRef(this.paramsId);
+  
+      // Nur den neuen Spieler zur Liste hinzufügen, ohne die vorhandenen Spieler zu überschreiben
+      await updateDoc(gameRef, {
+        players: arrayUnion(newPlayer)
+      });
+      console.log('Neuer Spieler erfolgreich in Firestore hinzugefügt');
+    } catch (error) {
+      console.error('Fehler beim Hinzufügen des Spielers:', error);
+    }
   }
 }

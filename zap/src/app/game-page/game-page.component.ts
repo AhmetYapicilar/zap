@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject,Input} from '@angular/core';
+import { Component, inject,Input,OnInit} from '@angular/core';
 import { PlayersComponent } from '../players/players.component';
 import { Game } from '../models/game';
 import { StartscreenComponent } from '../startscreen/startscreen.component';
@@ -26,7 +26,7 @@ import { Firestore, collection, collectionData,addDoc,docData,doc, updateDoc, } 
   templateUrl: './game-page.component.html',
   styleUrl: './game-page.component.scss'
 })
-export class GamePageComponent {
+export class GamePageComponent implements OnInit {
   game: Game;
   @Input() cardAmount: number = 0;
   @Input() name:string = ''; 
@@ -64,29 +64,51 @@ export class GamePageComponent {
     });
   }
   
-  
+  ngOnInit() {
+    // Ersetzen Sie `games$` durch die Observable, die Sie zum Laden der Daten verwenden
+    this.games$ = docData(this.getSingleGameRef(this.paramsId));
+    
+    // Abonnieren der Daten, um sicherzustellen, dass `playerHands` und `players` geladen werden
+    this.games$.subscribe((gameData: any) => {
+      if (gameData) {
+        this.game.playerHands = gameData.playerHands;
+        this.game.players = gameData.players;
+        console.log('Aktualisierte Daten von Firestore geladen:', gameData);
+      }
+    });
+  }
 
   handOut() {
-    const numberOfCards = 7; // Anzahl der Karten pro Spieler
-
+    const numberOfCards = 7;
+  
+    // Karten an alle Spieler austeilen
     this.game.players.forEach((player) => {
+      // Initialisieren, falls noch nicht vorhanden
+      if (!this.game.playerHands[player]) {
+        this.game.playerHands[player] = [];
+      }
+  
+      // Karten an den Spieler verteilen
       for (let j = 0; j < numberOfCards; j++) {
-        const card = this.game.stack.pop();
+        const card = this.game.stack.pop();  // Karte von oben im Stapel entfernen
         if (card) {
-          this.game.playerHands[player].push(card); // Karten an den entsprechenden Spieler austeilen
+          this.game.playerHands[player].push(card);  // Karte zur Hand des Spielers hinzufügen
         } else {
           console.error('Keine Karten mehr im Stapel!');
+          break;
         }
       }
     });
+  
+    // Überprüfen und loggen, ob `playerHands` und `stack` korrekt geändert wurden
     console.log('Karten ausgeteilt:', this.game.playerHands);
-    const spezificPlayer = this.game.players[1];
-    // console.log(this.game.playerHands[spezificPlayer].length);
-    this.showHowManyCards();
-    this.disableHandOutButton();
-    // this.gamerService.saveGame();
+    console.log('Verbleibende Karten im Stapel:', this.game.stack);
+  
+    // Nach Austeilen der Karten die Änderungen in Firestore speichern
+    this.gamerService.savePlayerHandsAndStack();
   }
-
+  
+  
   showHowManyCards() {
     for (let i = 0; i < this.game.players.length; i++) {
       // Wieviel Karten jeder hat
