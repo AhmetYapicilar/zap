@@ -37,39 +37,39 @@ export class GamePageComponent {
    games$;
    games;
 
-  constructor( private gamerService: GameService,private route: ActivatedRoute,) {
+   constructor(private gamerService: GameService, private route: ActivatedRoute) {
     this.game = new Game();
-    this.game.playerHands = {}; // Initialisiert ein leeres Objekt für die Spielerhände
-    this.players = this.gamerService.game.players;
-    // Spielerhände initialisieren
-    this.game.players.forEach((player) => {
-      this.game.playerHands[player] = []; // Jede Spielerhand als leeres Array initialisieren
-    });
-
-
-
+    this.firestore = inject(Firestore);
+  
     this.route.params.subscribe((params: any) => {
       this.paramsId = params.id;
     });
-
+  
     this.games$ = docData(this.getSingleGameRef(this.paramsId));
-    this.games = this.games$.subscribe((gameList:any) => {
-      console.log(gameList.players);
-    this.game.currentPlayer = gameList.currentPlayer;
-    this.game.playedCards = gameList.playedCards;
-    this.game.players = gameList.players;
-    this.game.stack = gameList.stack;
-    this.game.playerHands = gameList.playerHands;
+    this.games = this.games$.subscribe((gameList: any) => {
+      if (gameList) {
+        this.game.currentPlayer = gameList.currentPlayer;
+        this.game.playedCards = gameList.playedCards;
+        this.game.players = gameList.players;
+        this.game.stack = gameList.stack;
+        this.game.playerHands = gameList.playerHands || {}; // Stellt sicher, dass playerHands ein Objekt ist
+  
+        // Initialisiert playerHands, falls es nicht aus Firestore geladen wurde
+        this.game.players.forEach((player) => {
+          if (!this.game.playerHands[player]) {
+            this.game.playerHands[player] = []; // Initialisiert jede Spielerhand als leeres Array, falls undefiniert
+          }
+        });
+      }
     });
   }
-
+  
   
 
   handOut() {
     const numberOfCards = 7; // Anzahl der Karten pro Spieler
 
     this.game.players.forEach((player) => {
-      debugger;
       for (let j = 0; j < numberOfCards; j++) {
         const card = this.game.stack.pop();
         if (card) {
@@ -84,6 +84,7 @@ export class GamePageComponent {
     // console.log(this.game.playerHands[spezificPlayer].length);
     this.showHowManyCards();
     this.disableHandOutButton();
+    // this.gamerService.saveGame();
   }
 
   showHowManyCards() {

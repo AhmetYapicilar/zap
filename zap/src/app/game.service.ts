@@ -56,7 +56,7 @@ export class GameService {
         this.game.players.push(arrayUnion);
         console.log(this.game.players);
         
-        this.saveGame();
+        this.savePlayers();
       }
     });
   }
@@ -64,11 +64,15 @@ export class GameService {
   getSingleGameRef(docId: string) {
     return doc(collection(this.firestore, 'games'), docId);
   }
-  saveGame() {
+  savePlayers() {
     // Nur den neuen Spieler zum bestehenden Array in Firestore hinzufügen
     const gameRef = this.getSingleGameRef(this.paramsId);
     updateDoc(gameRef, {
       players: arrayUnion(this.game.players[this.game.players.length - 1])
     });
+  }
+
+  saveGame(){
+    updateDoc(this.getSingleGameRef(this.paramsId), this.game.toJson());
   }
 }
