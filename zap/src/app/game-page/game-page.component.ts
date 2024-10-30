@@ -81,7 +81,7 @@ export class GamePageComponent implements OnInit {
   
   handOut() {
     const numberOfCards = 7;
-  
+    debugger;
     // Karten an alle Spieler austeilen
     this.game.players.forEach((player) => {
       // Initialisieren, falls noch nicht vorhanden

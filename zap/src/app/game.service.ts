@@ -26,7 +26,9 @@ export class GameService {
 
   constructor(public dialog: MatDialog) {
     this.game = new Game();
-    this.game.playerHands = {};
+    // this.game.playerHands = {};
+
+
 
     // Spielerhände initialisieren
     this.game.players.forEach((player) => {

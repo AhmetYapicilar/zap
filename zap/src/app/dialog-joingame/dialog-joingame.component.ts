@@ -34,7 +34,7 @@ import { GameService } from '../game.service';
   styleUrls: ['./dialog-joingame.component.scss'],
 })
 export class DialogJoinGameComponent {
-  gameID: string = 'e0CZxX0V0kccdnhdQwle';
+  gameID: string = 'oEYnok08sgEUfIc4SHYT';
   startScreen = StartscreenComponent;
   constructor(
     private router: Router,
