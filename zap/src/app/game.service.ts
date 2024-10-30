@@ -74,6 +74,7 @@ export class GameService {
 
   async savePlayerHandsAndStack() {
     console.log('Versuche, playerHands und stack zu speichern');
+    console.log(this.game.playerHands);
     try {
       const gameRef = this.getSingleGameRef(this.paramsId);
   
