@@ -99,14 +99,12 @@ export class GamePageComponent implements OnInit {
           break;
         }
       }
-      this.gamerService.savePlayerHandsAndStack();
+
     });
   
     // Überprüfen und loggen, ob `playerHands` und `stack` korrekt geändert wurden
     console.log('Karten ausgeteilt:', this.game.playerHands);
     console.log('Verbleibende Karten im Stapel:', this.game.stack);
-  
-    // Nach Austeilen der Karten die Änderungen in Firestore speichern
     this.gamerService.savePlayerHandsAndStack();
   }
   

@@ -77,10 +77,9 @@ export class GameService {
     try {
       const gameRef = this.getSingleGameRef(this.paramsId);
   
-      // `playerHands` und `stack` serialisieren und kopieren
       await updateDoc(gameRef, {
-        playerHands: JSON.parse(JSON.stringify(this.game.playerHands)),  // Serialisieren und kopieren
-        stack: [...this.game.stack]                                      // Direkte Kopie des Arrays
+        playerHands: JSON.parse(JSON.stringify(this.game.playerHands)),  
+        stack: [this.game.stack]                                     
       });
   
       console.log('playerHands und stack wurden erfolgreich in Firestore gespeichert');
