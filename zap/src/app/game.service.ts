@@ -21,7 +21,7 @@ import {
 export class GameService {
   game: Game;
   firestore: Firestore = inject(Firestore);
-  paramsId: string = 'e0CZxX0V0kccdnhdQwle';
+  paramsId: string = 'oEYnok08sgEUfIc4SHYT';
   @Input() name: string = '';
 
   constructor(public dialog: MatDialog) {
