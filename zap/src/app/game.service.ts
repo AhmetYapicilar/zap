@@ -72,27 +72,24 @@ export class GameService {
   //   });
   // }
 
-async savePlayerHandsAndStack() {
-  console.log('Versuche, playerHands und stack zu speichern');
-  try {
-    const gameRef = this.getSingleGameRef(this.paramsId);
-
-    // Konvertieren Sie das Game-Objekt in JSON
-    const gameData = this.game.toJson();
-    
-    console.log('Speichern von playerHands und stack:', JSON.stringify(gameData.playerHands), JSON.stringify(gameData.stack));
-
-    // `playerHands` und `stack` in Firestore aktualisieren
-    await updateDoc(gameRef, {
-      playerHands: gameData.playerHands,  // Vermeidung von Referenzen
-      stack: gameData.stack                 // Kopie des Arrays anlegen
-    });
-    
-    console.log('playerHands und stack wurden erfolgreich in Firestore gespeichert');
-  } catch (error) {
-    console.error('Fehler beim Speichern der playerHands und stack:', error);
+  async savePlayerHandsAndStack() {
+    console.log('Versuche, playerHands und stack zu speichern');
+    try {
+      const gameRef = this.getSingleGameRef(this.paramsId);
+  
+      // `playerHands` und `stack` serialisieren und kopieren
+      await updateDoc(gameRef, {
+        playerHands: JSON.parse(JSON.stringify(this.game.playerHands)),  // Serialisieren und kopieren
+        stack: [...this.game.stack]                                      // Direkte Kopie des Arrays
+      });
+  
+      console.log('playerHands und stack wurden erfolgreich in Firestore gespeichert');
+    } catch (error) {
+      console.error('Fehler beim Speichern der playerHands und stack:', error);
+    }
   }
-}
+  
+  
 
   
   openDialog(): void {

@@ -63,21 +63,22 @@ export class GamePageComponent implements OnInit {
       }
     });
   }
-  
+
   ngOnInit() {
-    // Ersetzen Sie `games$` durch die Observable, die Sie zum Laden der Daten verwenden
     this.games$ = docData(this.getSingleGameRef(this.paramsId));
-    
-    // Abonnieren der Daten, um sicherzustellen, dass `playerHands` und `players` geladen werden
     this.games$.subscribe((gameData: any) => {
       if (gameData) {
-        this.game.playerHands = gameData.playerHands;
+        // Prüfen, ob playerHands bereits Karten enthält
+        if (Object.keys(gameData.playerHands).length > 0) {
+          this.game.playerHands = gameData.playerHands;
+        }
         this.game.players = gameData.players;
+        this.game.stack = gameData.stack;
         console.log('Aktualisierte Daten von Firestore geladen:', gameData);
       }
     });
   }
-
+  
   handOut() {
     const numberOfCards = 7;
   
@@ -98,6 +99,7 @@ export class GamePageComponent implements OnInit {
           break;
         }
       }
+      this.gamerService.savePlayerHandsAndStack();
     });
   
     // Überprüfen und loggen, ob `playerHands` und `stack` korrekt geändert wurden
