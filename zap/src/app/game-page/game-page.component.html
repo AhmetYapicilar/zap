@@ -3,24 +3,31 @@
 }
 
 <div class="game-container">
-    <div class="card-stack">
-        <!-- Stapel mit Karten wird gerendert -->
-        <ng-container *ngFor="let card of game.stack; let i = index">
-            <img *ngIf="i < 5" class="cover-card" src="./assets/img/cards/cover.png" [ngStyle]="{'right.px': i * 10}" alt="Card Stack">
-        </ng-container>
-        <button (click)="handOut()" id="handOut">Hand out cards</button>
+
+    <div class="middle">
+        <div class="card-stack">
+            <!-- Stapel mit Karten wird gerendert -->
+            <ng-container *ngFor="let card of game.stack; let i = index">
+                <img *ngIf="i < 5" class="cover-card" src="./assets/img/cards/cover.png" [ngStyle]="{'right.px': i * 10}" alt="Card Stack">
+            </ng-container>
+            <button (click)="handOut()" id="handOut">Hand out cards</button>
+        </div>
+    
+        <div class="cardInTheMiddle">
+                <img [src]="'./assets/img/cards/' + this.game.currentCard" alt="">
+        </div>
     </div>
 
     <!-- Hier könntest du die Karten der Spieler anzeigen, nachdem sie ausgeteilt wurden -->
-    <div class="players-hands">
+    <!-- <div class="players-hands">
         <ng-container *ngFor="let player of game.players; let i = index">
-            <div class="player" *ngIf="player === 'Justin'">
+            <div class="player" *ngIf="player === 'Justin'"> -->
                 <!-- Hier könntest du die Handkarten des Spielers anzeigen -->
-                <ng-container *ngFor="let card of this.game.playerHands[i]">
+                <!-- <ng-container *ngFor="let card of this.game.playerHands[i]">
                     <img class="player-card" [src]="'./assets/img/cards/' + card + '.png'" alt="{{ card }}">
                 </ng-container>
             </div>
-        </ng-container>
+        </ng-container> -->
         <!-- <ng-container *ngFor="let player of game.players; let i = index">
             <div class="player">
                 <span>{{ player }}</span>
@@ -35,13 +42,13 @@
             <ng-container *ngFor="let player of game.players; let i = index">
                 <div *ngIf="player === 'Ahmet'" class="player"> <!-- Nur für Justin anzeigen -->
                     <ng-container *ngFor="let card of game.playerHands[player]">
-                        <img class="player-card" [src]="'./assets/img/cards/' + card + '.png'" alt="{{ card }}">
+                        <img (click)="playCard(card, player)" class="player-card" [src]="'./assets/img/cards/' + card + '.png'" alt="{{ card }}">
                     </ng-container>
                     <span class="card-number">{{ game.playerHands[player]?.length || 0 }}</span>
                 </div>
             </ng-container>
         </div>
-        
+
     </div>
-</div>
+<!-- </div> -->
 
