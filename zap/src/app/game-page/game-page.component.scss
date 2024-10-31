@@ -6,6 +6,18 @@
     display: flex;
     justify-content:center;
     align-items: center;
+    flex-direction: column;
+}
+
+.middle{
+  
+}
+
+.player-card{
+  cursor: pointer;
+  &:hover{
+    scale: (1.1);
+  }
 }
 
 .card-stack {
