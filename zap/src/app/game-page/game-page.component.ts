@@ -177,13 +177,13 @@ export class GamePageComponent implements OnInit {
         this.game.currentCard = card + '.png'; // Setzt die gespielte Karte als die neue Karte in der Mitte
         this.game.playedCards.push(card); // Fügt die Karte der Liste der gespielten Karten hinzu
         this.game.playerHands[player] = this.game.playerHands[player].filter(c => c !== card); // Entfernt die gespielte Karte aus der Hand des Spielers
-        
+        this.game.currentPlayer++;
+        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
         console.log(`Karte gespielt: ${card}`); // Gibt in der Konsole aus, welche Karte gespielt wurde
     } else {
         console.log("Diese Karte kann nicht gespielt werden."); // Gibt eine Fehlermeldung in der Konsole aus, wenn die Karte nicht spielbar ist
     }
-    this.game.currentPlayer++;
-    this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
+ 
 }
 
 
