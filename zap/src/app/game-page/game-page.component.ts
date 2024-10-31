@@ -182,6 +182,8 @@ export class GamePageComponent implements OnInit {
     } else {
         console.log("Diese Karte kann nicht gespielt werden."); // Gibt eine Fehlermeldung in der Konsole aus, wenn die Karte nicht spielbar ist
     }
+    this.game.currentPlayer++;
+    this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
 }
 
 
