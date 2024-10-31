@@ -74,7 +74,6 @@ export class GamePageComponent implements OnInit {
         }
         this.game.players = gameData.players;
         this.game.stack = gameData.stack;
-        console.log('Aktualisierte Daten von Firestore geladen:', gameData);
       }
     });
   }
@@ -101,10 +100,7 @@ export class GamePageComponent implements OnInit {
       }
 
     });
-  
-    // Überprüfen und loggen, ob `playerHands` und `stack` korrekt geändert wurden
-    console.log('Karten ausgeteilt:', this.game.playerHands);
-    console.log('Verbleibende Karten im Stapel:', this.game.stack);
+
     this.gamerService.savePlayerHandsAndStack();
   }
   
@@ -114,7 +110,6 @@ export class GamePageComponent implements OnInit {
       // Wieviel Karten jeder hat
        this.spezifikPlayer = this.game.players[i];
       let name = this.game.playerHands[this.spezifikPlayer].length;
-      console.log(name);
     }
   }
 

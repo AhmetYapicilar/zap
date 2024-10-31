@@ -74,25 +74,23 @@ export class GameService {
   //   });
   // }
 
+
   async savePlayerHandsAndStack() {
-    console.log('Versuche, playerHands und stack zu speichern');
-    console.log(this.game.playerHands);
+    console.log('Speichern von playerHands und stack direkt in Firestore');
     try {
       const gameRef = this.getSingleGameRef(this.paramsId);
   
+      // Serialisierung, um sicherzustellen, dass die Datenstrukturen korrekt gespeichert werden
       await updateDoc(gameRef, {
-        playerHands: JSON.parse(JSON.stringify(this.game.playerHands)),  
-        stack: [this.game.stack]                                     
+        playerHands: JSON.parse(JSON.stringify(this.game.playerHands)),  // Serialisiert und vermeidet Referenzprobleme
+        stack: [...this.game.stack]  // Direkte Kopie des Arrays
       });
-  
-      console.log('playerHands und stack wurden erfolgreich in Firestore gespeichert');
+      
+      console.log('playerHands und stack erfolgreich in Firestore gespeichert');
     } catch (error) {
       console.error('Fehler beim Speichern der playerHands und stack:', error);
     }
   }
-  
-  
-
   
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogComponent);
@@ -100,7 +98,6 @@ export class GameService {
       if (newPlayer && newPlayer.length > 0) {
         console.log(newPlayer);
         this.game.players.push(newPlayer);
-  
         // Speichern Sie den neuen Spieler, ohne `players` zu überschreiben
         this.saveNewPlayer(newPlayer);
       }

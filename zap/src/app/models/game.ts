@@ -28,16 +28,14 @@ export class Game {
     shuffle(this.stack);
   }
 
-
   public toJson() {
     return {
-         players: this.players, 
-         stack : this.stack, 
-         playedCards: this.playedCards, 
-         currentPlayer: this.currentPlayer,
-        //  pickCardAnimation : this.pickCardAnimation,
-        playerHands : this.playerHands,
-    }
+      players: this.players,
+      stack: [...this.stack], // Kopie als flaches Array
+      playedCards: [...this.playedCards],
+      currentPlayer: this.currentPlayer,
+      playerHands: { ...this.playerHands },
+    };
   }
 }
 
