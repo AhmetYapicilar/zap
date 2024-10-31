@@ -91,7 +91,7 @@ export class GamePageComponent implements OnInit {
   }
 
   handOut() {
-    const numberOfCards = 7;
+    const numberOfCards = 12;
     // Karten an alle Spieler austeilen
     this.game.players.forEach((player) => {
       // Initialisieren, falls noch nicht vorhanden
@@ -182,6 +182,8 @@ export class GamePageComponent implements OnInit {
     } else {
         console.log("Diese Karte kann nicht gespielt werden."); // Gibt eine Fehlermeldung in der Konsole aus, wenn die Karte nicht spielbar ist
     }
+    this.game.currentPlayer++;
+    this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
 }
 
 
