@@ -1,9 +1,9 @@
 .player {
     display: flex;
     align-items: center;
-    background-color: red;
-    width: 250px;
-    border-top-left-radius: 30px;
+    background-color: rgba(255, 0, 0, 0.397);
+    width: 200px;
+    border-top-left-radius: 15px;
     border-bottom-left-radius: 30px;
     color: white;
     padding: 20px 0;
@@ -25,4 +25,5 @@
 .player-avtive {
     background-color: orange !important;
     color: black;
+    width: 250px !important;
 }

@@ -93,7 +93,9 @@ export class GameService {
   }
   
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogComponent);
+    const dialogRef = this.dialog.open(DialogComponent, {
+      disableClose: true // verhindert das Schließen beim Klicken außerhalb des Dialogs
+    });
     dialogRef.afterClosed().subscribe((newPlayer: string) => {
       if (newPlayer && newPlayer.length > 0) {
         console.log(newPlayer);
