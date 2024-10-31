@@ -80,7 +80,6 @@ export class GamePageComponent implements OnInit {
   
   handOut() {
     const numberOfCards = 7;
-    debugger;
     // Karten an alle Spieler austeilen
     this.game.players.forEach((player) => {
       // Initialisieren, falls noch nicht vorhanden
@@ -101,9 +100,8 @@ export class GamePageComponent implements OnInit {
 
     });
 
-    this.gamerService.savePlayerHandsAndStack();
+    // this.gamerService.savePlayerHandsAndStack();
   }
-  
   
   showHowManyCards() {
     for (let i = 0; i < this.game.players.length; i++) {
