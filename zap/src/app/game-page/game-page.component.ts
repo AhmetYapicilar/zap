@@ -117,32 +117,38 @@ export class GamePageComponent implements OnInit {
   showCurrentCard() {
     // Definiere eine Liste der ungültigen Karten
     const invalidCards = [
-      'blue-10.png', 'blue-11.png', 'blue-12.png',
-      'green-10.png', 'green-11.png', 'green-12.png',
-      'orange-10.png', 'orange-11.png', 'orange-12.png',
-      'yellow-10.png', 'yellow-11.png', 'yellow-12.png',
-      'wildcard-0.png', 'wildcard-1.png'
+      'blue-10.png',
+      'blue-11.png',
+      'blue-12.png',
+      'green-10.png',
+      'green-11.png',
+      'green-12.png',
+      'orange-10.png',
+      'orange-11.png',
+      'orange-12.png',
+      'yellow-10.png',
+      'yellow-11.png',
+      'yellow-12.png',
+      'wildcard-0.png',
+      'wildcard-1.png',
     ];
 
     // Wiederhole das Ziehen und Zurücklegen, bis eine gültige Karte gefunden wird
     do {
-        // Ziehe eine Karte von oben im Stapel und füge die Dateiendung hinzu
-        this.cardInTheMiddle = this.game.stack.pop() + '.png';
+      // Ziehe eine Karte von oben im Stapel und füge die Dateiendung hinzu
+      this.cardInTheMiddle = this.game.stack.pop() + '.png';
 
-        // Prüfe, ob die Karte ungültig ist
-        if (invalidCards.includes(this.cardInTheMiddle)) {
-            // Falls ungültig, lege die Karte unten in den Stapel zurück
-            this.game.stack.unshift(this.cardInTheMiddle);
-            console.log("Ungültige Karte zurückgelegt:", this.cardInTheMiddle);
-        }
+      // Prüfe, ob die Karte ungültig ist
+      if (invalidCards.includes(this.cardInTheMiddle)) {
+        // Falls ungültig, lege die Karte unten in den Stapel zurück
+        this.game.stack.unshift(this.cardInTheMiddle);
+        console.log('Ungültige Karte zurückgelegt:', this.cardInTheMiddle);
+      }
     } while (invalidCards.includes(this.cardInTheMiddle)); // Wiederhole, falls die Karte ungültig ist
     this.game.currentCard = this.cardInTheMiddle;
     // Gib die gültige Karte aus
-    console.log("Die Karte ist gültig:", this.cardInTheMiddle);
-}
-
-
-
+    console.log('Die Karte ist gültig:', this.cardInTheMiddle);
+  }
 
   showHowManyCards() {
     for (let i = 0; i < this.game.players.length; i++) {
@@ -158,34 +164,40 @@ export class GamePageComponent implements OnInit {
   }
 
   playCard(card: string, player: string) {
-    // Aktuelle Karte in der Mitte des Spielfelds
-    const currentCard = this.game.currentCard; // Speichert die Karte, die derzeit in der Mitte liegt
-
+    const currentCard = this.game.currentCard;
     // Extrahiere Farbe und Zahl der aktuellen Karte und der zu spielenden Karte
-    const [currentColor, currentNumber] = currentCard.split('-'); // Trennt die aktuelle Karte in Farbe und Zahl
-    const [cardColor, cardNumber] = card.split('-'); // Trennt die Karte, die gespielt werden soll, in Farbe und Zahl
-
+    let [currentColor, currentNumber] = currentCard.split('-'); // Trennt die aktuelle Karte in Farbe und Zahl
+    let [cardColor, cardNumber] = card.split('-'); // Trennt die Karte, die gespielt werden soll, in Farbe und Zahl
     // Überprüfe, ob die Karte gespielt werden kann (gleiche Farbe oder gleiche Zahl)
-    const isPlayable = 
-        currentColor === cardColor ||   // Prüft, ob die Farben gleich sind
-        currentNumber === cardNumber || // Prüft, ob die Zahlen gleich sind
-        card.startsWith('wildcard');    // Überprüft, ob die Karte ein Joker ist
-
-    // Wenn die Karte spielbar ist
+    cardNumber = cardNumber + '.png';
+    const isPlayable =
+      currentColor === cardColor || // Prüft, ob die Farben gleich sind
+      currentNumber === cardNumber || // Prüft, ob die Zahlen gleich sind
+      card.startsWith('wildcard'); // Überprüft, ob die Karte ein Joker ist
     if (isPlayable) {
-        // Karte als neue `currentCard` festlegen und aus der Hand des Spielers entfernen
-        this.game.currentCard = card + '.png'; // Setzt die gespielte Karte als die neue Karte in der Mitte
-        this.game.playedCards.push(card); // Fügt die Karte der Liste der gespielten Karten hinzu
-        this.game.playerHands[player] = this.game.playerHands[player].filter(c => c !== card); // Entfernt die gespielte Karte aus der Hand des Spielers
-        this.game.currentPlayer++;
-        this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
-        console.log(`Karte gespielt: ${card}`); // Gibt in der Konsole aus, welche Karte gespielt wurde
-    } else {
-        console.log("Diese Karte kann nicht gespielt werden."); // Gibt eine Fehlermeldung in der Konsole aus, wenn die Karte nicht spielbar ist
-    }
- 
+      // Karte als neue `currentCard` festlegen und aus der Hand des Spielers entfernen
+      this.game.currentCard = card + '.png'; // Setzt die gespielte Karte als die neue Karte in der Mitte
+      this.game.playedCards.push(card); // Fügt die Karte der Liste der gespielten Karten hinzu
+      // Array der Karten des Spielers
+const playerHand = this.game.playerHands[player];
+
+// Finden des Indexes der Karte, die entfernt werden soll
+const index = playerHand.indexOf(card);
+
+// Prüfen, ob die Karte in der Hand des Spielers existiert
+if (index !== -1) {
+  // Entfernt die Karte an der Position 'index'
+  playerHand.splice(index, 1);
 }
 
+      this.game.currentPlayer++;
+      this.game.currentPlayer =
+        this.game.currentPlayer % this.game.players.length;
+      console.log(`Karte gespielt: ${card}`); // Gibt in der Konsole aus, welche Karte gespielt wurde
+    } else {
+      console.log('Diese Karte kann nicht gespielt werden.'); // Gibt eine Fehlermeldung in der Konsole aus, wenn die Karte nicht spielbar ist
+    }
+  }
 
   disableHandOutButton() {
     let handOut = document.getElementById('handOut') as HTMLButtonElement; // Typcasting auf HTMLButtonElement
