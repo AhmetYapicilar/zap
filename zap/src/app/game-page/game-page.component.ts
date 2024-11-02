@@ -112,6 +112,8 @@ export class GamePageComponent implements OnInit {
     });
     this.showCurrentCard();
     // this.gamerService.savePlayerHandsAndStack();
+    this.game.currentPlayer = this.game.currentPlayer = Math.floor(Math.random() * this.game.players.length);
+    ;
   }
 
   showCurrentCard() {

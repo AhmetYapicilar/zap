@@ -4,7 +4,7 @@ export class Game {
   public players: string[] = [];
   public stack: string[] = [];
   public playedCards: string[] = [];
-  public currentPlayer: number = 0;
+  public currentPlayer: number = -1;
   public playerHands: { [player: string]: string[] } = {};
   public currentCard: string = ''; 
 
