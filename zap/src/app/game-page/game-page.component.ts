@@ -112,6 +112,7 @@ export class GamePageComponent implements OnInit {
     });
     this.showCurrentCard();
     // this.gamerService.savePlayerHandsAndStack();
+    // this.gamerService.savePlayerHandsAndStack();
     this.game.currentPlayer = this.game.currentPlayer = Math.floor(Math.random() * this.game.players.length);
     ;
   }
@@ -181,16 +182,16 @@ export class GamePageComponent implements OnInit {
       this.game.currentCard = card + '.png'; // Setzt die gespielte Karte als die neue Karte in der Mitte
       this.game.playedCards.push(card); // Fügt die Karte der Liste der gespielten Karten hinzu
       // Array der Karten des Spielers
-const playerHand = this.game.playerHands[player];
+      const playerHand = this.game.playerHands[player];
 
-// Finden des Indexes der Karte, die entfernt werden soll
-const index = playerHand.indexOf(card);
+      // Finden des Indexes der Karte, die entfernt werden soll
+      const index = playerHand.indexOf(card);
 
-// Prüfen, ob die Karte in der Hand des Spielers existiert
-if (index !== -1) {
-  // Entfernt die Karte an der Position 'index'
-  playerHand.splice(index, 1);
-}
+      // Prüfen, ob die Karte in der Hand des Spielers existiert
+      if (index !== -1) {
+        // Entfernt die Karte an der Position 'index'
+        playerHand.splice(index, 1);
+      }
 
       this.game.currentPlayer++;
       this.game.currentPlayer =
