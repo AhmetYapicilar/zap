@@ -48,6 +48,6 @@ export class DialogJoinGameComponent {
 
   navigateToURL(gameID: string) {
     this.router.navigateByUrl('/game/' + gameID);
-    this.gamerService.openDialog();
+    // this.gamerService.openDialog();
   }
 }
