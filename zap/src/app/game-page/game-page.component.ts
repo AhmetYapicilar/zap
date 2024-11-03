@@ -180,20 +180,33 @@ export class GamePageComponent implements OnInit {
       this.game.currentPlayer =
         this.game.currentPlayer % this.game.players.length;
       console.log(`Karte gespielt: ${card}`); // Gibt in der Konsole aus, welche Karte gespielt wurde
-    } else {
-      console.log('Diese Karte kann nicht gespielt werden.'); // Gibt eine Fehlermeldung in der Konsole aus, wenn die Karte nicht spielbar ist
+    } else if (!this.isPlayable(card, currentCard)) {
+      console.log('Kann nicht gespielt werden');
     }
   }
 
   isPlayable(card: any, currentCard: any) {
-    const [cardColor, cardNumber] = card.split('-');
-    const [currentColor, currentNumber] = currentCard.split('-');
-    
-    return (
-      cardColor === currentColor || // Gleiche Farbe
-      `${cardNumber}.png` === currentNumber
-    );
+    let [cardColor, cardNumber] = card.split('-');
+    let [currentColor, currentNumber] = currentCard.split('-');
+    currentNumber = currentNumber.split('.png');
+    currentNumber = currentNumber[0];
+    if(currentNumber < 10){
+      return (
+        cardColor === currentColor || // Gleiche Farbe
+        cardNumber === currentNumber
+      );
+  } else {
+    return false;
   }
+}
+
+currentCardIsASpecialCard(card: any, currentCard: any){
+  let [cardColor, cardNumber] = card.split('-');
+    let [currentColor, currentNumber] = currentCard.split('-');
+    currentNumber = currentNumber.split('.png');
+    currentNumber = currentNumber[0];
+    return currentNumber
+}
 
   takeCardFromStack(){
     let card: any = this.game.stack.pop();
@@ -201,6 +214,13 @@ export class GamePageComponent implements OnInit {
     this.game.currentPlayer++;
     this.game.currentPlayer =
     this.game.currentPlayer % this.game.players.length;
+  }
+
+  takeTwoCards(){
+    for (let i = 0; i < 2; i++) {
+      let card: any = this.game.stack.pop();
+      this.game.playerHands['Ahmet'].push(card);
+    }
   }
 
 
