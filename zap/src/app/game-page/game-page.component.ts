@@ -170,6 +170,58 @@ export class GamePageComponent implements OnInit {
   playCard(card: string, player: string) {
     const currentCard = this.game.currentCard;
     if (this.isPlayable(card, currentCard)) {
+      this.updateVariables(card, player);
+      console.log(`Karte gespielt: ${card}`); // Gibt in der Konsole aus, welche Karte gespielt wurde
+    } else if (this.currentCardIsATakeTwoCard(card, currentCard)) {
+      console.log('Ziehe 2 Karten');
+      this.playTakeTwoCardOnTakeTwoCard(card, currentCard, player)
+    }
+  }
+
+  updateVariables(card: any, player: any){
+    this.game.currentCard = card + '.png'; // Setzt die gespielte Karte als die neue Karte in der Mitte
+      this.game.playedCards.push(card); // Fügt die Karte der Liste der gespielten Karten hinzu
+      const playerHand = this.game.playerHands[player];
+
+      this.removeCardFromPlayerHand(playerHand, card);
+
+      this.game.currentPlayer++;
+      this.game.currentPlayer =
+        this.game.currentPlayer % this.game.players.length;
+  }
+
+  getCardColorsAndNumbers(card: any, currentCard:any){
+    let [cardColor, cardNumber] = card.split('-');
+    let [currentColor, currentNumber] = currentCard.split('-');
+    currentNumber = currentNumber.split('.png');
+    currentNumber = currentNumber[0];
+    return {cardColor, cardNumber, currentColor, currentNumber};
+  }
+
+  isPlayable(card: any, currentCard: any) {
+    let {cardColor, cardNumber, currentColor, currentNumber} = this.getCardColorsAndNumbers(card, currentCard);
+    if (currentNumber < 10) {
+      return (
+        cardColor === currentColor || // Gleiche Farbe
+        cardNumber === currentNumber
+      );
+    } else {
+      return false;
+    }
+  }
+
+  currentCardIsATakeTwoCard(card: any, currentCard: any) {
+    let {cardColor, cardNumber, currentColor, currentNumber} = this.getCardColorsAndNumbers(card, currentCard);
+    if (currentNumber == 10) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  playTakeTwoCardOnTakeTwoCard(card: any, currentCard: any, player: any){
+    let {cardColor, cardNumber, currentColor, currentNumber} = this.getCardColorsAndNumbers(card, currentCard);
+    if (cardNumber == 10){
       this.game.currentCard = card + '.png'; // Setzt die gespielte Karte als die neue Karte in der Mitte
       this.game.playedCards.push(card); // Fügt die Karte der Liste der gespielten Karten hinzu
       const playerHand = this.game.playerHands[player];
@@ -180,51 +232,25 @@ export class GamePageComponent implements OnInit {
       this.game.currentPlayer =
         this.game.currentPlayer % this.game.players.length;
       console.log(`Karte gespielt: ${card}`); // Gibt in der Konsole aus, welche Karte gespielt wurde
-    } else if (!this.isPlayable(card, currentCard)) {
-      console.log('Kann nicht gespielt werden');
+    } else {
+      this.takeTwoCards();
     }
   }
 
-  isPlayable(card: any, currentCard: any) {
-    let [cardColor, cardNumber] = card.split('-');
-    let [currentColor, currentNumber] = currentCard.split('-');
-    currentNumber = currentNumber.split('.png');
-    currentNumber = currentNumber[0];
-    if(currentNumber < 10){
-      return (
-        cardColor === currentColor || // Gleiche Farbe
-        cardNumber === currentNumber
-      );
-  } else {
-    return false;
-  }
-}
-
-currentCardIsASpecialCard(card: any, currentCard: any){
-  let [cardColor, cardNumber] = card.split('-');
-    let [currentColor, currentNumber] = currentCard.split('-');
-    currentNumber = currentNumber.split('.png');
-    currentNumber = currentNumber[0];
-    return currentNumber
-}
-
-  takeCardFromStack(){
+  takeCardFromStack() {
     let card: any = this.game.stack.pop();
     this.game.playerHands['Ahmet'].push(card);
     this.game.currentPlayer++;
     this.game.currentPlayer =
-    this.game.currentPlayer % this.game.players.length;
+      this.game.currentPlayer % this.game.players.length;
   }
 
-  takeTwoCards(){
+  takeTwoCards() {
     for (let i = 0; i < 2; i++) {
       let card: any = this.game.stack.pop();
       this.game.playerHands['Ahmet'].push(card);
     }
   }
-
-
-
 
   removeCardFromPlayerHand(playerHand: any, card: any) {
     // Finden des Indexes der Karte, die entfernt werden soll
