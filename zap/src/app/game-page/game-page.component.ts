@@ -113,8 +113,9 @@ export class GamePageComponent implements OnInit {
     this.showCurrentCard();
     // this.gamerService.savePlayerHandsAndStack();
     // this.gamerService.savePlayerHandsAndStack();
-    this.game.currentPlayer = this.game.currentPlayer = Math.floor(Math.random() * this.game.players.length);
-    ;
+    this.game.currentPlayer = this.game.currentPlayer = Math.floor(
+      Math.random() * this.game.players.length
+    );
   }
 
   showCurrentCard() {
@@ -168,30 +169,12 @@ export class GamePageComponent implements OnInit {
 
   playCard(card: string, player: string) {
     const currentCard = this.game.currentCard;
-    // Extrahiere Farbe und Zahl der aktuellen Karte und der zu spielenden Karte
-    let [currentColor, currentNumber] = currentCard.split('-'); // Trennt die aktuelle Karte in Farbe und Zahl
-    let [cardColor, cardNumber] = card.split('-'); // Trennt die Karte, die gespielt werden soll, in Farbe und Zahl
-    // Überprüfe, ob die Karte gespielt werden kann (gleiche Farbe oder gleiche Zahl)
-    cardNumber = cardNumber + '.png';
-    const isPlayable =
-      currentColor === cardColor || // Prüft, ob die Farben gleich sind
-      currentNumber === cardNumber || // Prüft, ob die Zahlen gleich sind
-      card.startsWith('wildcard'); // Überprüft, ob die Karte ein Joker ist
-    if (isPlayable) {
-      // Karte als neue `currentCard` festlegen und aus der Hand des Spielers entfernen
+    if (this.isPlayable(card, currentCard)) {
       this.game.currentCard = card + '.png'; // Setzt die gespielte Karte als die neue Karte in der Mitte
       this.game.playedCards.push(card); // Fügt die Karte der Liste der gespielten Karten hinzu
-      // Array der Karten des Spielers
       const playerHand = this.game.playerHands[player];
 
-      // Finden des Indexes der Karte, die entfernt werden soll
-      const index = playerHand.indexOf(card);
-
-      // Prüfen, ob die Karte in der Hand des Spielers existiert
-      if (index !== -1) {
-        // Entfernt die Karte an der Position 'index'
-        playerHand.splice(index, 1);
-      }
+      this.removeCardFromPlayerHand(playerHand, card);
 
       this.game.currentPlayer++;
       this.game.currentPlayer =
@@ -199,6 +182,38 @@ export class GamePageComponent implements OnInit {
       console.log(`Karte gespielt: ${card}`); // Gibt in der Konsole aus, welche Karte gespielt wurde
     } else {
       console.log('Diese Karte kann nicht gespielt werden.'); // Gibt eine Fehlermeldung in der Konsole aus, wenn die Karte nicht spielbar ist
+    }
+  }
+
+  isPlayable(card: any, currentCard: any) {
+    const [cardColor, cardNumber] = card.split('-');
+    const [currentColor, currentNumber] = currentCard.split('-');
+    
+    return (
+      cardColor === currentColor || // Gleiche Farbe
+      `${cardNumber}.png` === currentNumber
+    );
+  }
+
+  takeCardFromStack(){
+    let card: any = this.game.stack.pop();
+    this.game.playerHands['Ahmet'].push(card);
+    this.game.currentPlayer++;
+    this.game.currentPlayer =
+    this.game.currentPlayer % this.game.players.length;
+  }
+
+
+
+
+  removeCardFromPlayerHand(playerHand: any, card: any) {
+    // Finden des Indexes der Karte, die entfernt werden soll
+    const index = playerHand.indexOf(card);
+
+    // Prüfen, ob die Karte in der Hand des Spielers existiert
+    if (index !== -1) {
+      // Entfernt die Karte an der Position 'index'
+      playerHand.splice(index, 1);
     }
   }
 

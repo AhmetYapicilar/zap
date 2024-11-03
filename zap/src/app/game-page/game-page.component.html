@@ -12,7 +12,7 @@
         <div class="card-stack">
             <!-- Stapel mit Karten wird gerendert -->
             <ng-container *ngFor="let card of game.stack; let i = index">
-                <img *ngIf="i < 5" class="cover-card" src="./assets/img/cards/cover.png" [ngStyle]="{'right.px': i * 10}" alt="Card Stack">
+                <img (click)="takeCardFromStack()" *ngIf="i < 5" class="cover-card" src="./assets/img/cards/cover.png" [ngStyle]="{'right.px': i * 10}" alt="Card Stack">
             </ng-container>
             <button (click)="handOut()" id="handOut">Hand out cards</button>
         </div>
